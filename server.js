@@ -32,6 +32,7 @@ io.on('connection', (socket) => {
 
     const interval = setInterval(() => {
         getCPUUsage((cpuUsage) => {
+            console.log(cpuUsage)
             socket.emit('cpu', { usage: `${cpuUsage}%` });
         });
     }, 1000);
