@@ -47,14 +47,28 @@ function getRAMUsage () {
     });
 }
 
+function getDiskUsage () {
+    return new Promise((resolve, reject) => {
+        exec("df -h / | awk 'NR==2 {print $5}'", (error, stdout, stderr) => {
+            if (error) {
+                console.error(`exec error: ${error}`);
+                return reject(error);
+            }
+            console.log(stdout);
+            const diskUsage = parseFloat(stdout.replace('%', ''));
+            resolve(diskUsage.toFixed(2));
+        });
+    });
+}
+
 io.on('connection', (socket) => {
     console.log('Client connected');
 
     const interval = setInterval(() => {
-        Promise.all([getCPUUsage(), getRAMUsage()])
-            .then(([cpuUsage, ramUsage]) => {
-                console.log(`CPU: ${cpuUsage}%, RAM: ${ramUsage}%`);
-                socket.emit('usage', { cpu: `${cpuUsage}%`, ram: `${ramUsage}%` });
+        Promise.all([getCPUUsage(), getRAMUsage(), getDiskUsage()])
+            .then(([cpuUsage, ramUsage, diskUsage]) => {
+                console.log(`CPU: ${cpuUsage}%, RAM: ${ramUsage}%, Disk: ${diskUsage}%`);
+                socket.emit('usage', { cpu: `${cpuUsage}%`, ram: `${ramUsage}%`, disk: `${diskUsage}%` });
             })
             .catch(error => {
                 console.error(`Error fetching usage data: ${error}`);
@@ -69,5 +83,5 @@ io.on('connection', (socket) => {
 
 const PORT = 3000;
 server.listen(PORT, () => {
-    console.log(`CPU and RAM Monitor WebSocket Server running on port ${PORT}`);
+    console.log(`CPU, RAM, and Disk Monitor WebSocket Server running on port ${PORT}`);
 });
