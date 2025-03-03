@@ -16,13 +16,13 @@ function getCPUUsage (callback) {
             console.error(`exec error: ${error}`);
             return;
         }
-        console.log(stdout)
-        const cpuUsage = stdout.match(/(\d+\.\d+)\s*us,\s*(\d+\.\d+)\s*sy,\s*(\d+\.\d+)\s*id/);
-        console.log(cpuUsage)
+        console.log(stdout);
+        const cpuUsage = stdout.match(/(\d+\.\d+)\s*us,\s*(\d+\.\d+)\s*sy,\s*(\d+\.\d+)\s*ni,\s*(\d+\.\d+)\s*id/);
+        console.log(cpuUsage);
         if (cpuUsage) {
             const user = parseFloat(cpuUsage[1]);
             const sys = parseFloat(cpuUsage[2]);
-            const idle = parseFloat(cpuUsage[3]);
+            const idle = parseFloat(cpuUsage[4]);
             const usage = user + sys;
             callback(usage.toFixed(2));
         }
@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
 
     const interval = setInterval(() => {
         getCPUUsage((cpuUsage) => {
-            console.log(cpuUsage)
+            console.log(cpuUsage);
             socket.emit('cpu', { usage: `${cpuUsage}%` });
         });
     }, 1000);
