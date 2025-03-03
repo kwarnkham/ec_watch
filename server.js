@@ -16,7 +16,9 @@ function getCPUUsage (callback) {
             console.error(`exec error: ${error}`);
             return;
         }
+        console.log(stdout)
         const cpuUsage = stdout.match(/(\d+\.\d+)\s*us,\s*(\d+\.\d+)\s*sy,\s*(\d+\.\d+)\s*id/);
+        console.log(cpuUsage)
         if (cpuUsage) {
             const user = parseFloat(cpuUsage[1]);
             const sys = parseFloat(cpuUsage[2]);
