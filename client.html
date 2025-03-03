@@ -9,7 +9,7 @@
     <p id="cpu-usage">Waiting for data...</p>
 
     <script>
-      const socket = io("ws://localhost:3000"); // Change to your server IP if needed
+      const socket = io("ws://18.140.69.160:3000"); // Change to your server IP if needed
 
       socket.on("cpu", (data) => {
         document.getElementById(

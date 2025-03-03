@@ -11,12 +11,12 @@ const io = new Server(server, {
 });
 
 function getCPUUsage (callback) {
-    exec("top -l 1 | grep 'CPU usage'", (error, stdout, stderr) => {
+    exec("top -b -n 1 | grep 'Cpu(s)'", (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return;
         }
-        const cpuUsage = stdout.match(/(\d+\.\d+)% user, (\d+\.\d+)% sys, (\d+\.\d+)% idle/);
+        const cpuUsage = stdout.match(/(\d+\.\d+)\s*us,\s*(\d+\.\d+)\s*sy,\s*(\d+\.\d+)\s*id/);
         if (cpuUsage) {
             const user = parseFloat(cpuUsage[1]);
             const sys = parseFloat(cpuUsage[2]);
