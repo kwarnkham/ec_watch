@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CPU Monitor</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  </head>
+  <body>
+    <h1>CPU Usage</h1>
+    <p id="cpu-usage">Waiting for data...</p>
+
+    <script>
+      const socket = io("ws://localhost:3000"); // Change to your server IP if needed
+
+      socket.on("cpu", (data) => {
+        document.getElementById(
+          "cpu-usage"
+        ).innerText = `CPU Usage: ${data.usage}`;
+      });
+    </script>
+  </body>
+</html>
