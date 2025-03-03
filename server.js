@@ -35,7 +35,7 @@ function getCPUUsage () {
 
 function getRAMUsage () {
     return new Promise((resolve, reject) => {
-        exec("free | awk '/Mem/{printf(\"%.2f\", ($3-$6)/$2*100)}'", (error, stdout, stderr) => {
+        exec("free | awk '/Mem/{printf(\"%.2f\", ($2-$7)/$2*100)}'", (error, stdout, stderr) => {
             if (error) {
                 console.error(`exec error: ${error}`);
                 return reject(error);
