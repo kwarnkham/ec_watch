@@ -9,15 +9,13 @@ const io = new Server(server, {
     }
 });
 
-const cpuThreshold = 10;
-const memoryThreshold = 10;
-const diskThreshold = 10;
+const cpuThreshold = 80;
+const memoryThreshold = 80;
+const diskThreshold = 80;
 
 let cpuExceedTime = 0;
 let ramExceedTime = 0;
 let diskExceedTime = 0;
-
-alertBot("node")
 
 io.on('connection', (socket) => {
     console.log('Client connected');
