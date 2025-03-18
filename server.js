@@ -10,7 +10,7 @@ const io = new Server(server, {
 });
 
 const cpuThreshold = 80;
-const memoryThreshold = 10;
+const memoryThreshold = 80;
 const diskThreshold = 80;
 
 let cpuExceedTime = 0;
