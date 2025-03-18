@@ -1,4 +1,5 @@
 const { exec } = require('child_process');
+const axios = require('axios')
 
 function getCPUUsage () {
     return new Promise((resolve, reject) => {
@@ -51,4 +52,27 @@ function getDiskUsage () {
     });
 }
 
-module.exports = { getCPUUsage, getRAMUsage, getDiskUsage };
+function alertBot (message) {
+    const url = process.env.URL ?? 'https://admin.ctests.xyz/send'
+    const group_id = process.env.group_id ?? '-4693903019'
+    const user_id = process.env.user_id ?? '1'
+    const secret = process.env.secret ?? '6WKF1500VEx5Rd8CHgubgZKf9kxoO3Pdd'
+
+    const data = {
+        telegram_id: group_id,
+        user_id,
+        secret,
+        message
+    };
+
+    console.log(url, data)
+
+    axios.postForm(url, data).then(response => {
+        console.log(response.data)
+    }).catch(error => {
+        console.log(error.response.data)
+    })
+}
+
+
+module.exports = { getCPUUsage, getRAMUsage, getDiskUsage, alertBot };
