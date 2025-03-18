@@ -20,7 +20,14 @@ io.on('connection', (socket) => {
         Promise.all([getCPUUsage(), getRAMUsage(), getDiskUsage()])
             .then(([cpuUsage, ramUsage, diskUsage]) => {
                 console.log(`CPU: ${cpuUsage}%, RAM: ${ramUsage}%, Disk: ${diskUsage}%`);
-                socket.emit('usage', { cpu: `${cpuUsage}%`, ram: `${ramUsage}%`, disk: `${diskUsage}%`, cpuThreshold, memoryThreshold, diskThreshold });
+                socket.emit('usage', {
+                    cpu: `${cpuUsage}%`,
+                    ram: `${ramUsage}%`,
+                    disk: `${diskUsage}%`,
+                    cpuThreshold: `${cpuThreshold}%`,
+                    memoryThreshold: `${memoryThreshold}%`,
+                    diskThreshold: `${diskThreshold}%`
+                });
             })
             .catch(error => {
                 console.error(`Error fetching usage data: ${error}`);
