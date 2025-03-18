@@ -9,9 +9,9 @@ const io = new Server(server, {
     }
 });
 
-const cpuThreshold = 80;
-const memoryThreshold = 80;
-const diskThreshold = 80;
+const cpuThreshold = 10;
+const memoryThreshold = 10;
+const diskThreshold = 10;
 
 let cpuExceedTime = 0;
 let ramExceedTime = 0;
