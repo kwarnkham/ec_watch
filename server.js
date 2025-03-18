@@ -10,7 +10,7 @@ const io = new Server(server, {
 });
 
 const cpuThreshold = 80;
-const memoryThreshold = 80;
+const memoryThreshold = 10;
 const diskThreshold = 80;
 
 let cpuExceedTime = 0;
@@ -37,7 +37,7 @@ io.on('connection', (socket) => {
                 if (cpuUsage > cpuThreshold) {
                     cpuExceedTime += 1;
                     if (cpuExceedTime >= 10) {
-                        alertBot(`CPU usage exceeded ${cpuThreshold}% for 10 seconds: ${cpuUsage}%`)
+                        alertBot(`${process.env.MY_IP}: CPU usage exceeded ${cpuThreshold}% for 10 seconds: ${cpuUsage}%`)
                         cpuExceedTime = 0;
                     }
                 } else {
@@ -47,7 +47,7 @@ io.on('connection', (socket) => {
                 if (ramUsage > memoryThreshold) {
                     ramExceedTime += 1;
                     if (ramExceedTime >= 10) {
-                        alertBot(`RAM usage exceeded ${memoryThreshold}% for 10 seconds: ${ramUsage}%`);
+                        alertBot(`${process.env.MY_IP}: RAM usage exceeded ${memoryThreshold}% for 10 seconds: ${ramUsage}%`);
                         ramExceedTime = 0;
                     }
                 } else {
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
                 if (diskUsage > diskThreshold) {
                     diskExceedTime += 1;
                     if (diskExceedTime >= 10) {
-                        alertBot(`Disk usage exceeded ${diskThreshold}% for 10 seconds: ${diskUsage}%`);
+                        alertBot(`${process.env.MY_IP}: Disk usage exceeded ${diskThreshold}% for 10 seconds: ${diskUsage}%`);
                         diskExceedTime = 0;
                     }
                 } else {
