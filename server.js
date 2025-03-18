@@ -17,7 +17,7 @@ let cpuExceedTime = 0;
 let ramExceedTime = 0;
 let diskExceedTime = 0;
 
-alertBot(`Node program on ${process.env.MY_IP} has been started`)
+alertBot(`Node program on ${process.env.MY_IP} has been (re)started`)
 
 io.on('connection', (socket) => {
     console.log('Client connected');
