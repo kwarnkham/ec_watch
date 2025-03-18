@@ -54,9 +54,9 @@ function getDiskUsage () {
 
 function alertBot (message) {
     const url = process.env.URL ?? 'https://admin.ctests.xyz/send'
-    const group_id = process.env.group_id ?? '-4693903019'
-    const user_id = process.env.user_id ?? '1'
-    const secret = process.env.secret ?? '6WKF1500VEx5Rd8CHgubgZKf9kxoO3Pdd'
+    const group_id = process.env.GROUP_ID ?? '-4693903019'
+    const user_id = process.env.USER_ID ?? '1'
+    const secret = process.env.SECRET ?? '6WKF1500VEx5Rd8CHgubgZKf9kxoO3Pdd'
 
     const data = {
         telegram_id: group_id,
