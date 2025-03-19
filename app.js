@@ -8,9 +8,9 @@ function getCPUUsage () {
                 console.error(`exec error: ${error}`);
                 return reject(error);
             }
-            console.log(stdout);
+
             const cpuUsage = stdout.match(/(\d+\.\d+)\s*us,\s*(\d+\.\d+)\s*sy,\s*(\d+\.\d+)\s*ni,\s*(\d+\.\d+)\s*id/);
-            console.log(cpuUsage);
+
             if (cpuUsage) {
                 const user = parseFloat(cpuUsage[1]);
                 const sys = parseFloat(cpuUsage[2]);
@@ -31,7 +31,7 @@ function getRAMUsage () {
                 console.error(`exec error: ${error}`);
                 return reject(error);
             }
-            console.log(stdout);
+
             const ramUsage = parseFloat(stdout);
             resolve(ramUsage.toFixed(2));
         });
@@ -45,7 +45,7 @@ function getDiskUsage () {
                 console.error(`exec error: ${error}`);
                 return reject(error);
             }
-            console.log(stdout);
+
             const diskUsage = parseFloat(stdout.replace('%', ''));
             resolve(diskUsage.toFixed(2));
         });
@@ -64,8 +64,6 @@ function alertBot (message) {
         secret,
         message
     };
-
-    console.log(url, data)
 
     axios.postForm(url, data).then(response => {
         console.log(response.data)
