@@ -3,20 +3,15 @@ const axios = require('axios')
 
 function getCPUUsage () {
     return new Promise((resolve, reject) => {
-        exec("top -b -n 1 | grep 'Cpu(s)'", (error, stdout, stderr) => {
+        exec("mpstat 1 1 | awk '/all/ {print 100 - $NF}'", (error, stdout, stderr) => {
             if (error) {
                 console.error(`exec error: ${error}`);
                 return reject(error);
             }
 
-            const cpuUsage = stdout.match(/(\d+\.\d+)\s*us,\s*(\d+\.\d+)\s*sy,\s*(\d+\.\d+)\s*ni,\s*(\d+\.\d+)\s*id/);
-
-            if (cpuUsage) {
-                const user = parseFloat(cpuUsage[1]);
-                const sys = parseFloat(cpuUsage[2]);
-                const idle = parseFloat(cpuUsage[4]);
-                const usage = user + sys;
-                resolve(usage.toFixed(2));
+            const cpuUsage = parseFloat(stdout.trim());
+            if (!isNaN(cpuUsage)) {
+                resolve(cpuUsage.toFixed(2));
             } else {
                 reject(new Error('Failed to parse CPU usage'));
             }
