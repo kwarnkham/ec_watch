@@ -6,7 +6,7 @@ export botUrl='https://admin.ctests.xyz/send'
 export botSecret=""
 export botUserId="1"
 export botGroupId="-4693903019"
-export easyCloudUrl='https://cloud-manager.ctests.xyz/api'
+export easyCloudUrl='https://cloud-manager.ctests.xyz/'
 export serverId='1'
 
 sudo $installer update -y

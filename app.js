@@ -48,7 +48,7 @@ function getDiskUsage () {
 }
 
 function checkIn () {
-    axios.post(`${process.env.EASY_CLOUD_URL}/${process.env.SERVER_ID}/check-in`).then(response => {
+    axios.post(`${process.env.EASY_CLOUD_URL}/api/${process.env.SERVER_ID}/check-in`).then(response => {
         console.log(response.data)
     }).catch(error => {
         console.log(error.response.data)
