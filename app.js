@@ -47,6 +47,14 @@ function getDiskUsage () {
     });
 }
 
+function checkIn () {
+    axios.post(`${process.env.EASY_CLOUD_URL}/${process.env.SERVER_ID}/check-in`).then(response => {
+        console.log(response.data)
+    }).catch(error => {
+        console.log(error.response.data)
+    })
+}
+
 function alertBot (message) {
     const url = process.env.URL ?? 'https://admin.ctests.xyz/send'
     const group_id = process.env.GROUP_ID ?? '-4693903019'
@@ -68,4 +76,4 @@ function alertBot (message) {
 }
 
 
-module.exports = { getCPUUsage, getRAMUsage, getDiskUsage, alertBot };
+module.exports = { getCPUUsage, getRAMUsage, getDiskUsage, alertBot, checkIn };

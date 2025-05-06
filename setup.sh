@@ -6,6 +6,8 @@ export botUrl='https://admin.ctests.xyz/send'
 export botSecret=""
 export botUserId="1"
 export botGroupId="-4693903019"
+export easyCloudUrl='https://cloud-manager.ctests.xyz/api'
+export serverId='1'
 
 sudo $installer update -y
 sudo $installer upgrade -y
@@ -39,7 +41,7 @@ git clone https://github.com/kwarnkham/ec_watch.git $HOME/ec_watch
 npm install --prefix $HOME/ec_watch
 npm install -g pm2
 
-MY_IP=$ip NAME="$name" URL=$botUrl SECRET=$botSecret USER_ID=$botUserId GROUP_ID=$botGroupId pm2 start $HOME/ec_watch/server.js --name server --output /dev/null --error /dev/null
+MY_IP=$ip NAME="$name" EASY_CLOUD_URL=$easyCloudUrl SERVER_ID=$serverId URL=$botUrl SECRET=$botSecret USER_ID=$botUserId GROUP_ID=$botGroupId pm2 start $HOME/ec_watch/server.js --name server --output /dev/null --error /dev/null
 
 pm2 startup
 

@@ -1,6 +1,6 @@
 const http = require('http');
 const { Server } = require('socket.io');
-const { getCPUUsage, getRAMUsage, getDiskUsage, alertBot } = require('./app');
+const { getCPUUsage, getRAMUsage, getDiskUsage, alertBot, checkIn } = require('./app');
 
 const server = http.createServer();
 const io = new Server(server, {
@@ -17,16 +17,12 @@ let cpuExceedTime = 0;
 let ramExceedTime = 0;
 let diskExceedTime = 0;
 
-let counter = 0;
-
 alertBot(`Node program on ${process.env.MY_IP} has been (re)started`)
 
 io.on('connection', (socket) => {
     console.log('Client connected');
 
     const interval = setInterval(() => {
-        counter += 1;
-
         Promise.all([getCPUUsage(), getRAMUsage(), getDiskUsage()])
             .then(([cpuUsage, ramUsage, diskUsage]) => {
                 socket.emit('usage', {
@@ -37,20 +33,8 @@ io.on('connection', (socket) => {
                     memoryThreshold: `${memoryThreshold}%`,
                     diskThreshold: `${diskThreshold}%`
                 });
-                //every 5 minutes
-                if (counter >= 60 * 5) {
-                    counter = 0;
-                    if (cpuUsage >= 70 || ramUsage >= 70 || diskUsage >= 70) {
-                        alertBot(`
-                            Server Name: ${process.env.NAME}
-                            \nIP: ${process.env.MY_IP}
-                            \nStatus: Server is in high usage
-                            \nCPU Usage: ${cpuUsage}%
-                            \nRAM Usage: ${ramUsage}%
-                            \nDisk Usage: ${diskUsage}%
-                            `);
-                    }
-                }
+
+                return;
 
                 if (cpuUsage > cpuThreshold) {
                     cpuExceedTime += 1;
@@ -97,3 +81,7 @@ const PORT = 3000;
 server.listen(PORT, () => {
     console.log(`CPU, RAM, and Disk Monitor WebSocket Server running on port ${PORT}`);
 });
+
+setInterval(() => {
+    checkIn()
+}, 1000 * 60 * 3) 
